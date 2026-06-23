@@ -23,23 +23,31 @@ body {
     line-height: 1.7;
     min-height: 100vh;
     overflow-x: hidden;
-
-    /* Starry Night background — local file */
-    background-image: url('starry night.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
     background-color: #0a0f23; /* fallback */
 }
 
-/* Dark semi-transparent overlay via pseudo-element */
+/* Starry Night background as a fixed pseudo-element
+   This avoids the mobile bug where background-attachment:fixed
+   causes the image to zoom in massively on iOS/Android */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background-image: url('starry night.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    pointer-events: none;
+}
+
+/* Dark semi-transparent overlay */
 body::before {
     content: '';
     position: fixed;
     inset: 0;
     background: rgba(10, 15, 35, 0.4);
-    z-index: 0;
+    z-index: -1;
     pointer-events: none;
 }
 
